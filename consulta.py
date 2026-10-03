@@ -4,12 +4,12 @@ import csv
 import os
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 
 VIACEP_URL = "https://viacep.com.br/ws/{cep}/json/"
 
 def validar_cep(cep):
-    cep = re.sub(r'\D', '', cep)  # remove tudo que não for número
+    cep = re.sub(r'\D', '', cep)
     if len(cep) != 8:
         return None
     return cep
@@ -36,7 +36,7 @@ def consultar_cep(cep):
         "bairro": data.get("bairro"),
         "cidade": data.get("localidade"),
         "estado": data.get("uf"),
-        "consultado_em": datetime.utcnow().isoformat()
+        "consultado_em": datetime.now(timezone.utc).isoformat()
     }
 
 def salvar_csv(dados, arquivo="consultas.csv"):
