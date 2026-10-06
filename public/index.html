@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CEP Explorer</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">TYPESCRIPT • REST • SQLITE</p>
+      <h1>CEP Explorer</h1>
+      <p class="subtitle">Consulta de endereços com ViaCEP e histórico local em SQL.</p>
+    </header>
+
+    <section class="layout">
+      <section class="card search-card">
+        <h2>Consultar CEP</h2>
+        <form id="cep-form">
+          <label for="cep">CEP</label>
+          <div class="search-row">
+            <input id="cep" name="cep" inputmode="numeric" placeholder="01001-000" maxlength="9" required />
+            <button type="submit">Buscar</button>
+          </div>
+        </form>
+        <p id="message" class="message"></p>
+        <div id="result" class="result hidden"></div>
+      </section>
+
+      <section class="card">
+        <div class="heading-row">
+          <div>
+            <p class="eyebrow">SQLITE</p>
+            <h2>Consultas recentes</h2>
+          </div>
+          <button id="refresh" class="secondary" type="button">Atualizar</button>
+        </div>
+        <div id="history" class="history"></div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

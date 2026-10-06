@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS consultas (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  cep TEXT NOT NULL UNIQUE,
+  logradouro TEXT NOT NULL DEFAULT '',
+  bairro TEXT NOT NULL DEFAULT '',
+  cidade TEXT NOT NULL,
+  estado TEXT NOT NULL,
+  searched_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_consultas_searched_at
+  ON consultas(searched_at DESC);

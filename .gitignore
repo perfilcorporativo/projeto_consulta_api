@@ -1,0 +1,5 @@
+data/runtime/*.db
+data/runtime/*.db-shm
+data/runtime/*.db-wal
+node_modules/
+.env

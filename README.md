@@ -1,98 +1,71 @@
-🔎 Consulta de CEP via API (Python + CSV)
+# CEP Explorer — TypeScript + ViaCEP + SQLite
 
-Este projeto demonstra como consumir uma API pública, validar dados, exibir informações ao usuário e registrar tudo em um arquivo CSV.
+Evolução de um projeto de consulta de CEP que começou como script Python e CSV. A versão atual possui interface web, backend em TypeScript, consumo de API REST e persistência SQL.
 
-🚀 Funcionalidades
+A implementação anterior foi preservada em `legacy-python/`.
 
-Consulta de CEP usando a API pública ViaCEP
+## Tecnologias
 
-Validação automática do CEP (remove caracteres e aceita apenas 8 dígitos)
+- TypeScript e Node.js 24
+- JavaScript, HTML e CSS
+- API REST ViaCEP
+- SQLite / SQL
+- Git
+- node:test
 
-Mensagens de erro amigáveis
+## Funcionalidades
 
-Repetição automática até que um CEP válido seja informado
+- validação e normalização de CEP
+- consulta de endereço pela API ViaCEP
+- cache local em SQLite para evitar consultas repetidas
+- histórico das consultas mais recentes
+- interface web responsiva
+- tratamento de erros de rede e CEP inexistente
+- testes automatizados de validação e endpoints
 
-Exibição organizada das informações retornadas
+## Executar
 
-Registro de cada consulta em consultas.csv
+```bash
+git clone https://github.com/perfilcorporativo/projeto_consulta_api.git
+cd projeto_consulta_api
+npm start
+```
 
-Geração automática do cabeçalho do CSV (somente na primeira execução)
+Acesse `http://127.0.0.1:3001`.
 
-📁 Estrutura do Projeto
-projeto_consulta_api/
-│
-├── consulta.py       # Código-fonte do sistema
-├── consultas.csv     # Gerado automaticamente após a primeira consulta
-└── README.md         # Documentação do projeto
+## Testes
 
-🛠 Tecnologias Utilizadas
+```bash
+npm test
+```
 
-Python 3
+## Endpoints
 
-Requests (para fazer requisições HTTP)
+| Método | Endpoint | Descrição |
+| --- | --- | --- |
+| GET | `/api/health` | health check |
+| GET | `/api/cep/:cep` | consulta e armazena um CEP |
+| GET | `/api/history` | últimas consultas |
 
-CSV (manipulação de planilhas)
+Na primeira consulta o backend busca no ViaCEP e persiste o resultado. Nas próximas consultas do mesmo CEP, retorna o SQLite com `cache: true`.
 
-ViaCEP API
+## Estrutura
 
-📥 Como Executar
+```text
+src/            backend TypeScript e persistência
+public/         interface web
+tests/          testes
+schema.sql      modelo SQL
+legacy-python/  primeira versão em Python + CSV
+```
 
-Instale o Python 3
-https://www.python.org/downloads/
+## O que pratiquei
 
-Instale a biblioteca necessária:
+Integração com serviços externos, modelagem SQL, cache simples, APIs REST, tratamento de erros e integração frontend/backend.
 
-pip install requests
+## Próximos passos
 
-
-Execute o programa:
-
-python consulta.py
-
-
-Digite um CEP válido (ex: 01001000)
-
-📊 Exemplo de Saída
-=== Consulta de CEP via API (ViaCEP) ===
-Digite o CEP (apenas números): 01001000
-
-Resultado da busca:
-Cep: 01001-000
-Logradouro: Praça da Sé
-Bairro: Sé
-Cidade: São Paulo
-Estado: SP
-
-Consulta salva em consultas.csv
-
-🧾 Sobre o Arquivo CSV
-
-O arquivo consultas.csv é gerado automaticamente e contém:
-
-cep
-
-logradouro
-
-bairro
-
-cidade
-
-estado
-
-consultado_em (data/hora da consulta)
-
-Cada nova consulta adiciona uma nova linha sem apagar dados anteriores.
-
-🎯 Objetivo do Projeto
-
-Este projeto reforça habilidades essenciais e muito valorizadas no mercado:
-
-Consumo e integração com APIs
-
-Manipulação de arquivos CSV
-
-Lógica de programação em Python
-
-Tratamento de erros
-
-Documentação profissional para GitHub
+- expiração configurável do cache
+- paginação do histórico
+- métricas de uso
+- documentação OpenAPI
