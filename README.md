@@ -1,39 +1,71 @@
-# Consulta de CEP via API (Python + CSV)
+# CEP Explorer — TypeScript + ViaCEP + SQLite
 
-Projeto de estudo criado para praticar **lógica de programação, consumo de API, validação de dados, tratamento de erros e manipulação de arquivos CSV**.
+Evolução de um projeto de consulta de CEP que começou como script Python e CSV. A versão atual possui interface web, backend em TypeScript, consumo de API REST e persistência SQL.
 
-## O que o projeto faz
+A implementação anterior foi preservada em `legacy-python/`.
 
-- Consulta CEPs usando a API pública ViaCEP
-- Valida o formato informado pelo usuário
-- Trata erros de rede e CEP inexistente
-- Exibe endereço, bairro, cidade e estado
-- Registra as consultas em `consultas.csv`
+## Tecnologias
 
-## Tecnologias utilizadas
+- TypeScript e Node.js 24
+- JavaScript, HTML e CSS
+- API REST ViaCEP
+- SQLite / SQL
+- Git
+- node:test
 
-- Python 3
-- Requests
-- CSV
-- API ViaCEP
+## Funcionalidades
 
-## Como executar
+- validação e normalização de CEP
+- consulta de endereço pela API ViaCEP
+- cache local em SQLite para evitar consultas repetidas
+- histórico das consultas mais recentes
+- interface web responsiva
+- tratamento de erros de rede e CEP inexistente
+- testes automatizados de validação e endpoints
 
-1. Instale o Python 3.
-2. Instale a dependência:
+## Executar
 
 ```bash
-pip install requests
+git clone https://github.com/perfilcorporativo/projeto_consulta_api.git
+cd projeto_consulta_api
+npm start
 ```
 
-3. Execute:
+Acesse `http://127.0.0.1:3001`.
+
+## Testes
 
 ```bash
-python consulta.py
+npm test
+```
+
+## Endpoints
+
+| Método | Endpoint | Descrição |
+| --- | --- | --- |
+| GET | `/api/health` | health check |
+| GET | `/api/cep/:cep` | consulta e armazena um CEP |
+| GET | `/api/history` | últimas consultas |
+
+Na primeira consulta o backend busca no ViaCEP e persiste o resultado. Nas próximas consultas do mesmo CEP, retorna o SQLite com `cache: true`.
+
+## Estrutura
+
+```text
+src/            backend TypeScript e persistência
+public/         interface web
+tests/          testes
+schema.sql      modelo SQL
+legacy-python/  primeira versão em Python + CSV
 ```
 
 ## O que pratiquei
 
-Este projeto foi desenvolvido para reforçar fundamentos de Python e integração entre sistemas, incluindo requisições HTTP, validação de entrada, organização de dados e documentação de um projeto simples.
+Integração com serviços externos, modelagem SQL, cache simples, APIs REST, tratamento de erros e integração frontend/backend.
 
-> Projeto pessoal de estudo e portfólio. Não representa experiência profissional.
+## Próximos passos
+
+- expiração configurável do cache
+- paginação do histórico
+- métricas de uso
+- documentação OpenAPI
